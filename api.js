@@ -6,18 +6,22 @@ const loadSingleUser = () => {
 loadSingleUser()
 
 const displaySingleUser = (user) => {
-    console.log(user)
+    // console.log(user)
 }
 // meal db 
 const toggleSpinner = displayStyle => {
     document.getElementById('spinner').style.display = displayStyle
 }
+const toggleSearchResult = displayStyle => {
+    document.getElementById('meals').style.display = displayStyle
+}
 
 const searchMeal = () => {
     const searchText = document.getElementById('search-field').value
 
-    // show spinner 
+    //display spinner 
     toggleSpinner('block')
+    toggleSearchResult('none')
     loadMeals(searchText)
     document.getElementById('search-field').value = ''
 }
@@ -34,18 +38,25 @@ const loadMeals = (searchText) => {
 const displayMeals = meals => {
     const container = document.getElementById('meals')
     container.textContent = ''
-    meals.forEach(meal => {
+    if (!meals) {
+        alert('wrong input')
+    }
+    meals?.forEach(meal => {
         console.log(meal)
         const div = document.createElement('div')
         div.innerHTML = `
         <h1>${meal.strMeal} </h1>
-        <button onclick="mealDetail('${meal.strMeal}')" > Click Me </button>
+        <p>${meal.strIngredient8 ? meal.strIngredient8 : ''
+            } </p >
+    <button onclick="mealDetail('${meal.strMeal}')" > Click Me </button>
 `
         container.appendChild(div)
     })
+    toggleSpinner('none')
+    toggleSearchResult('block')
 }
 loadMeals('fish')
 
-const mealDetail = mealName => {
-    console.log(mealName)
-}
+// const mealDetail = mealName => {
+//     console.log(mealName)
+// }
